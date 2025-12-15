@@ -57,7 +57,7 @@ This project is inspired by platforms like Airbnb, focusing on property rentals 
    ```bash
    cp .env.example .env
    ```
-   Edit `.env` with your values (do not commit `.env` to GitHub—it's ignored by `.gitignore`).
+   Edit `.env` with your values
 
    Alternatively, for deployment, set these as environment variables in your hosting platform (e.g., Heroku, Vercel).
 
