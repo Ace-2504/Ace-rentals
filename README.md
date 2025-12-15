@@ -1,18 +1,32 @@
 # Ace Rentals
 
-Ace Rentals is a full-stack web application built with Node.js and Express, designed for listing and renting properties such as homes, apartments, or vacation spots. Users can create listings with images and location data, browse available rentals, leave reviews, and manage their accounts securely.
+## Index
+
+1. [Overview](#overview)
+2. [Problem Statement](#problem-statement)
+3. [Tech Stack](#tech-stack)
+4. [Functional Requirements](functional-requirements)
+5. [Non-Functional Requirements](non-functional-requirements)
+6. [Repository Layout](repository-layout)  
+7. [Installation and Setup](installation-and-setup)
+8. [Usage](usage) 
+9. [API Endpoints](api-endpoints)
+10. [System Design and Request Flow](system-design-and-request-flow)
+11. [Future Features](future-features) 
+12. [Contributing](contributing)
+13. [License](license)
+14. [Acknowledgements](acknowledgements)
+
+## Overview
+
+Ace Rentals is a full-stack web application built with Node.js and Express, designed for listing properties such as homes, apartments, or vacation spots for rent. Users can create listings with images and location data, browse available rentals, leave reviews, and manage their accounts securely.
 
 This project is inspired by platforms like Airbnb, focusing on property rentals with features like user authentication, image uploads, geocoding for locations, and review systems.
 
-## Features
+## Problem Statement  
 
-- **User Authentication**: Signup, login, and logout with secure password handling using Passport.js.
-- **Property Listings**: Create, view, edit, and delete rental listings with details like title, description, price, location, and images.
-- **Image Uploads**: Upload and store images using Cloudinary for seamless media management.
-- **Geocoding**: Integrate Mapbox to convert location strings into map coordinates for better visualization.
-- **Reviews System**: Users can leave ratings and comments on listings, with author verification.
-- **Responsive UI**: Built with EJS templates and Bootstrap for a clean, mobile-friendly interface.
-- **Validation**: Server-side validation using Joi to ensure data integrity.
+Traditional property rentals often lack transparency, security, and ease of use, making it difficult for travelers and owners to find trustworthy options. Ace Rentals solves this by providing a secure, user-friendly platform for listing, booking, and reviewing properties, with features like image uploads and location mapping to build trust and streamline the rental experience.
+
 
 ## Tech Stack
 
@@ -25,6 +39,22 @@ This project is inspired by platforms like Airbnb, focusing on property rentals 
 - **Templating**: EJS with ejs-mate
 - **Session Management**: express-session with connect-flash for messages
 - **Other**: method-override for PUT/DELETE, dotenv for environment variables
+
+## Functional Requirements
+
+- **User Authentication**: Signup, login, and logout with secure password handling using Passport.js.
+- **Property Listings**: Create, view, edit, and delete rental listings with details like title, description, price, location, and images.
+- **Image Uploads**: Upload and store images using Cloudinary for seamless media management.
+- **Geocoding**: Integrate Mapbox to convert location strings into map coordinates for better visualization.
+- **Reviews System**: Users can leave ratings and comments on listings, with author verification.
+- **Responsive UI**: Built with EJS templates and Bootstrap for a clean, mobile-friendly interface.
+- **Validation**: Server-side validation using Joi to ensure data integrity.
+
+## Non-Functional Requirements
+
+- **Securiity**: Server-side authorization only and HttpOnly session cookies
+- **Maintainability**: Clear folder structure, Centralized logic and Minimal duplication
+- **Reliability**: External service failures like Cloudinary do not break core flows and Errors handled consistently
 
 ## Repository Layout
 
@@ -39,7 +69,7 @@ This project is inspired by platforms like Airbnb, focusing on property rentals 
 - `schema.js` — Joi validation schemas.
 - `utils/` — Helper functions like error handling and async wrappers.
 
-## Installation & Setup
+## Installation and Setup
 
 1. **Clone the repository**:
    ```bash
@@ -83,7 +113,7 @@ This project is inspired by platforms like Airbnb, focusing on property rentals 
 - **Edit/Delete Listings**: Owners can modify or remove their listings.
 - **Leave Reviews**: Authenticated users can rate and comment on listings.
 
-## API Endpoints (Overview)
+## API Endpoints
 
 - `GET /listings` — View all listings
 - `POST /listings` — Create a new listing (auth required)
@@ -95,6 +125,27 @@ This project is inspired by platforms like Airbnb, focusing on property rentals 
 - `GET /signup`, `POST /signup` — User registration
 - `GET /login`, `POST /login` — User login
 - `GET /logout` — User logout
+
+## System Design and Request Flow 
+
+The application is designed so that rules, data, and user interface behavior remain consistent as the system grows.
+Important decisions are always made on the server, while the frontend focuses only on display.
+This keeps the system secure, predictable, and easy to maintain.
+
+**Key design choices**:
+
+- **Server-side rule checks (Middleware pattern)**: login and ownership checks run before any action.
+- **Ownership-based access**: users can modify only the listings and reviews they own.
+- **Server-driven UI**: the frontend shows actions, but the server decides what is allowed.
+- **Consistent request handling**: all requests follow the same flow for clarity and reliability.
+- **Central error handling**: shared logic is handled in one place
+
+**Flowcharts for better understanding of System Design and Data Flow are given below**:
+
+<img width="1622" height="648" alt="image" src="https://github.com/user-attachments/assets/34cf4ec7-bed0-4ece-98e7-72ce23272a40" />
+
+<img width="2092" height="556" alt="image" src="https://github.com/user-attachments/assets/919f530e-057b-4f13-ba28-aea2e77f528e" />
+
 
 ## Future Features
 
@@ -118,6 +169,6 @@ This project is licensed under the ISC License. See the LICENSE file for details
 
 ## Acknowledgments
 
-- Built as part of a JavaScript course project.
+- Built as part of the Apna College course project.
 - Inspired by travel and rental platforms like Airbnb.
 - Thanks to the open-source community for libraries like Express, Mongoose, and Passport.
