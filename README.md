@@ -2,7 +2,7 @@
 
 ## Index
 
-1. [Overview(1-line Architecture summary)](#overview)
+1. [Overview](#overview)
 2. [Problem Statement](#problem-statement)
 3. [Tech Stack](#tech-stack)
 4. [Architecture](#architecture)
