@@ -1,66 +1,72 @@
-// Example starter JavaScript for disabling form submissions if there are invalid fields
 (() => {
   'use strict'
-
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
   const forms = document.querySelectorAll('.needs-validation')
-
-  // Loop over them and prevent submission
   Array.from(forms).forEach(form => {
     form.addEventListener('submit', event => {
       if (!form.checkValidity()) {
         event.preventDefault()
         event.stopPropagation()
       }
-
       form.classList.add('was-validated')
     }, false)
   })
 })()
 
+// 1. Tax Switch Safety Check
 let taxSwitch = document.getElementById("flexSwitchCheckDefault");
-taxSwitch.addEventListener("click", () => {
-  let taxInfo = document.getElementsByClassName("tax-info");
-  for (info of taxInfo) {
-    if (info.style.display != "inline") {
-      info.style.display = "inline";
-    } else {
-      info.style.display = "none";
+if (taxSwitch) { // Only run if the element exists
+  taxSwitch.addEventListener("click", () => {
+    let taxInfo = document.getElementsByClassName("tax-info");
+    for (let info of taxInfo) { // Added 'let' to info for better practice
+      if (info.style.display != "inline") {
+        info.style.display = "inline";
+      } else {
+        info.style.display = "none";
+      }
     }
-  }
-});
+  });
+}
 
+// 2. Filters Scroll Buttons Safety Check
 document.addEventListener("DOMContentLoaded", function () {
   const leftBtn = document.querySelector(".left-btn");
   const rightBtn = document.querySelector(".right-btn");
   const filtersContainer = document.getElementById("filters-container");
-  const filters = document.getElementById("filters");
+  
+  // Only run if ALL filter elements are present
+  if (leftBtn && rightBtn && filtersContainer) {
+    const filterElement = document.querySelector(".filter");
+    if (filterElement) {
+      const filterWidth = filterElement.offsetWidth + 32;
 
-  const filterWidth = document.querySelector(".filter").offsetWidth + 32;
+      leftBtn.addEventListener("click", function () {
+        filtersContainer.scrollLeft -= filterWidth;
+      });
 
-  leftBtn.addEventListener("click", function () {
-    filtersContainer.scrollLeft -= filterWidth;
-  });
-
-  rightBtn.addEventListener("click", function () {
-    filtersContainer.scrollLeft += filterWidth;
-  });
+      rightBtn.addEventListener("click", function () {
+        filtersContainer.scrollLeft += filterWidth;
+      });
+    }
+  }
 });
 
+// 3. Touch Scroll Safety Check
 document.addEventListener("DOMContentLoaded", function () {
   const container = document.getElementById("filters-container");
+  
+  if (container) { // Only run if container exists
+    let startX;
+    let scrollLeft;
 
-  let startX;
-  let scrollLeft;
+    container.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].pageX;
+      scrollLeft = container.scrollLeft;
+    });
 
-  container.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].pageX;
-    scrollLeft = container.scrollLeft;
-  });
-
-  container.addEventListener("touchmove", (e) => {
-    const x = e.touches[0].pageX;
-    const walk = startX - x;
-    container.scrollLeft = scrollLeft + walk;
-  });
+    container.addEventListener("touchmove", (e) => {
+      const x = e.touches[0].pageX;
+      const walk = startX - x;
+      container.scrollLeft = scrollLeft + walk;
+    });
+  }
 });

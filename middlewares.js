@@ -55,9 +55,27 @@ module.exports.isReviewAuthor = async (req, res, next) => {
     let { id, reviewId } = req.params;
     let review = await Review.findById(reviewId);
     if(!review.author.equals(res.locals.currUser._id)) {
-        req.flash("error", "You are not the author of this review");
+         req.flash("error", "You are not authorized to delete this review");
         return res.redirect(`/listings/${id}`);
     }
 
     next();
 }
+
+module.exports.isReviewUnique = async (req, res, next) => {
+    let { id } = req.params;
+    let userId = req.user._id;
+
+    const listing = await Listing.findById(id).populate("reviews");
+
+    const alreadyReviewed = listing.reviews.some((review) => 
+        review.author.equals(userId)
+    );
+
+    if (alreadyReviewed) {
+        req.flash("error", "You have already reviewed this listing.");
+        return res.redirect(`/listings/${id}`);
+    }
+
+    next();
+};

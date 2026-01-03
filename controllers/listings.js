@@ -7,7 +7,7 @@ const geocodingClient = mbxGeocoding({ accessToken: token });
 
 module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
-    res.render("listings/index.ejs", {allListings});
+    res.render("listings/index.ejs", { allListings });
 }
 
 module.exports.renderNewForm = (req, res) => {
@@ -15,7 +15,7 @@ module.exports.renderNewForm = (req, res) => {
 }
 
 module.exports.showListing = async (req, res) => {
-    let {id} = req.params;
+    let { id } = req.params;
     const listing = await Listing.findById(id)
         .populate({
             path: "reviews",
@@ -23,12 +23,20 @@ module.exports.showListing = async (req, res) => {
                 path: "author",
             },
         })
-        .populate("owner");
-    if(!listing) {
+        .populate("owner"); // THIS LINE IS CRUCIAL
+        
+    if (!listing) {
         req.flash("error", "Listing you requested for does not exist!");
-        res.redirect("/listings");
+        return res.redirect("/listings");
     }
-    res.render("listings/show.ejs", {listing});
+        let hasReviewed = false;
+    if (req.user) {
+        hasReviewed = listing.reviews.some((rev) => 
+            rev.author && rev.author._id.equals(req.user._id)
+        );
+    }
+    console.log("OWNER DATA:", listing.owner);
+    res.render("listings/show.ejs", { listing, hasReviewed });
     
 };
 

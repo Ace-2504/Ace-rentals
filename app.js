@@ -1,11 +1,13 @@
-if(process.env.NODE_ENV != "production") { 
-require('dotenv').config();
+
+if (process.env.NODE_ENV != "production") {
+    require('dotenv').config();
 }
 
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
+const {MongoStore} = require("connect-mongo");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
@@ -22,9 +24,8 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
-
-
-const mongo_url = "mongodb://127.0.0.1:27017/ace_rentals";
+//const mongo_url = "mongodb://127.0.0.1:27017/ace_rentals";
+const dbUrl = process.env.ATLASDB_URL;
 
 main() 
   .then(() => {
@@ -33,11 +34,11 @@ main()
     console.log(err);
   });
 async function main() {
-    await mongoose.connect(mongo_url);
+    await mongoose.connect(dbUrl);
 };
 
 app.get("/", (req, res) => {
-    res.send("HI")
+    res.redirect("/listings")
 });
 
 
@@ -48,9 +49,20 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 
-
+console.log("MongoStore Object:", MongoStore);
+const store = MongoStore.create({ 
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SESSION_SECRET
+    },
+    touchAfter: 24 * 3600,
+});
+store.on("error", () => {
+    console.log("ERROR IN MONGO STORE", err);
+});
 const sessionOptions = {
-    secret: "mysupersecretstring",
+    store,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -59,6 +71,8 @@ const sessionOptions = {
         httpOnly: true,
     }
 };
+
+
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -75,6 +89,7 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user; //have to make this because ejs cant access req.user directly but can access locals.
+    res.locals.currPath = req.originalUrl.split("?")[0]
     next();
 });
 

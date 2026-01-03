@@ -14,7 +14,7 @@ module.exports.signup = async (req, res) => {
             if(err) {
                 return next(err);
             }
-            req.flash("success", "Welcome to Wonderlust");
+            req.flash("success", `Hi ${req.body.username} Welcome to Ace Rentals`);
             res.redirect("/listings");
         });
     } catch(e) {
@@ -28,17 +28,19 @@ module.exports.renderLoginForm = (req, res) => {
 }
 
 module.exports.login = async(req, res) => {
-    req.flash("success", "Welcome back to Ace Rentals!");
+    req.flash("success", `Hey ${req.body.username} Welcome back to Ace Rentals!`);
     let redirectUrl = res.locals.redirectUrl || "/listings";
     res.redirect(redirectUrl);
 }
 
 module.exports.logout = (req, res, next) => {
     req.logout((err) => {
-        if(err) {
+        req.logout((err) => {
+        if (err) {
             return next(err);
         }
-        req.flash("success", "You are logged out!");
+        req.flash("success", "You are logged out!"); 
         res.redirect("/listings");
-    })
+    });
+    });
 }

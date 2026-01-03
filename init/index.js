@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 const initData = require("./data.js");
 const Listing = require("../models/listing.js");
+const User = require("../models/user.js");
 
-const mongo_url = "mongodb://127.0.0.1:27017/ace_rentals";
+require('dotenv').config();
+const mongo_url = process.env.ATLASDB_URL;
 
 main() 
   .then(() => {
@@ -14,11 +16,20 @@ async function main() {
     await mongoose.connect(mongo_url);
 };
 
+
 const initDB = async () => {
   await Listing.deleteMany({});
-  initData.data = initData.data.map((obj) => ({...obj, owner: "68de7e8e3f83925dc717ad5a"}))
-  await Listing.insertMany(initData.data);
-  console.log("data was initialized");
+  await User.deleteMany({});
+  // Create a new user
+  const user = new User({ username: "demoUser", email: "demo@example.com" });
+  await User.register(user, "password123");
+  // Use the new user's _id for all listings
+  const updatedData = initData.data.map((obj) => ({
+    ...obj,
+    owner: user._id
+  }));
+  await Listing.insertMany(updatedData);
+  console.log("data and user were initialized");
 };
 
 initDB();

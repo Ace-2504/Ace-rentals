@@ -109,7 +109,7 @@ while the frontend remains focused on presentation and user interaction.
    ```
    Edit `.env` with your values
 
-   Alternatively, for deployment, set these as environment variables in your hosting platform (e.g., Heroku, Vercel).
+   Alternatively, for deployment, set these as environment variables in your hosting platform (e.g., Heroku).
 
 4. **Start MongoDB** (ensure it's running locally or update `MONGO_URI` for a remote instance).
 
