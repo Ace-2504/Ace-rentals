@@ -8,15 +8,16 @@
 4. [Architecture](#architecture)
 5. [Functional Requirements](#functional-requirements)
 6. [Non-Functional Requirements](#non-functional-requirements)
-7. [Repository Layout](#repository-layout)  
-8. [Installation and Setup](#installation-and-setup)
-9. [Usage](#usage) 
-10. [API Endpoints](#api-endpoints)
-11. [System Design and Request Flow](#system-design-and-request-flow)
-12. [Future Features](#future-features) 
-13. [Contributing](#contributing)
-14. [License](#license)
-15. [Acknowledgements](#acknowledgements)
+7. [Repository Layout](#repository-layout)
+8. [Live Demo](#live-demo)  
+9. [Installation and Setup](#installation-and-setup)
+10. [Usage](#usage) 
+11. [API Endpoints](#api-endpoints)
+12. [System Design and Request Flow](#system-design-and-request-flow)
+13. [Future Features](#future-features) 
+14. [Contributing](#contributing)
+15. [License](#license)
+16. [Acknowledgements](#acknowledgements)
 
 ## Overview
 
@@ -88,6 +89,10 @@ while the frontend remains focused on presentation and user interaction.
 - `cloudConfig.js` — Cloudinary configuration for image uploads.
 - `schema.js` — Joi validation schemas.
 - `utils/` — Helper functions like error handling and async wrappers.
+
+## Live Demo
+
+Here is the link of the project deployed on render [link](https://ace-rentals.onrender.com/listings)
 
 ## Installation and Setup
 
