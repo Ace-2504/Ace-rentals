@@ -1,10 +1,12 @@
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const mongoose = require("mongoose");
 const initData = require("./data.js");
 const Listing = require("../models/listing.js");
 const User = require("../models/user.js");
-
-require('dotenv').config();
 const mongo_url = process.env.ATLASDB_URL;
+
+console.log("Database URL is:", process.env.MONGO_URL);
 
 main() 
   .then(() => {
