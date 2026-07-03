@@ -2,6 +2,8 @@
 require('dotenv').config();
 const express = require("express");
 const app = express();
+const attachObservability = require("./observability");
+attachObservability(app, { serviceName: "ace-rentals" });
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const {MongoStore} = require("connect-mongo");

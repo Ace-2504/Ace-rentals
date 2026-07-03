@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: ace-rentals
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node app.js
+    healthCheckPath: /health
+    envVars:
+      - key: ATLASDB_URL
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: NODE_VERSION
+        value: "20"
